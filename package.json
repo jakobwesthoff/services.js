@@ -1,0 +1,35 @@
+{
+  "name": "@jakobwesthoff/dependency.js",
+  "version": "0.0.0-semantically-released",
+  "description": "A dependency injection container for javascript using explicit service definitions",
+  "main": "Distribution/index.js",
+  "scripts": {
+    "prepublish": "npm run clean && npm run babel:index && npm run babel:library && semantic-release pre",
+    "clean": "rm -rf ./Distribution/*",
+    "babel:index": "node node_modules/.bin/babel -d Distribution index.js",
+    "babel:library": "node node_modules/.bin/babel -d Distribution/Library Library",
+    "babel:specs": "node node_modules/.bin/babel --copy-files -d Distribution/Specification Specification",
+    "test": "npm run clean && npm run babel:index && npm run babel:library && npm run babel:specs && cd Distribution && ../node_modules/.bin/jasmine JASMINE_CONFIG_PATH=Specification/Support/jasmine.json; cd ..",
+    "postpublish": "semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jakobwesthoff/dependency.js.git"
+  },
+  "keywords": [
+    "dic",
+    "di",
+    "depdendency injection",
+    "service",
+    "container"
+  ],
+  "author": "Jakob Westhoff <jakob@westhoffswelt.de> (http://westhoffswelt.de)",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "babel": "^5.0.12",
+    "jasmine": "^2.2.1",
+    "semantic-release": "^3.0.5"
+  }
+}
