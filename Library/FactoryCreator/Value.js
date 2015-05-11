@@ -11,7 +11,7 @@ export default class ValueFactoryCreator {
             meta: {
                 dependencies: []
             },
-            solution: function(container) {
+            factory: function(container) {
                 return value;
             }
         });
