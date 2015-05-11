@@ -9,7 +9,8 @@
     "babel:index": "node node_modules/.bin/babel -d Distribution index.js",
     "babel:library": "node node_modules/.bin/babel -d Distribution/Library Library",
     "babel:specs": "node node_modules/.bin/babel --copy-files -d Distribution/Specification Specification",
-    "test": "npm run clean && npm run babel:index && npm run babel:library && npm run babel:specs && cd Distribution && ../node_modules/.bin/jasmine JASMINE_CONFIG_PATH=Specification/Support/jasmine.json; cd ..",
+    "test:distribution": "npm run clean && npm run babel:index && npm run babel:library && npm run babel:specs && cd Distribution && ../node_modules/.bin/jasmine JASMINE_CONFIG_PATH=Specification/Support/jasmine.json; cd ..",
+    "test": "./node_modules/.bin/babel-node ./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=Specification/Support/jasmine.json; cd ..",
     "postpublish": "semantic-release post"
   },
   "repository": {
@@ -26,10 +27,14 @@
   "author": "Jakob Westhoff <jakob@westhoffswelt.de> (http://westhoffswelt.de)",
   "license": "MIT",
   "dependencies": {
+    "immutable": "^3.7.2"
   },
   "devDependencies": {
     "babel": "^5.0.12",
     "jasmine": "^2.2.1",
-    "semantic-release": "^3.0.5"
+    "semantic-release": "^3.0.5",
+    "sinon": "^1.14.1",
+    "unexpected": "^7.0.5",
+    "unexpected-sinon": "^5.1.2"
   }
 }
