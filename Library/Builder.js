@@ -1,5 +1,5 @@
 import Immutable, {List, Map} from "immutable";
-import {Container} from "./Container.js";
+import Container from "./Container.js";
 
 import ValueFactoryCreator from "./FactoryCreator/Value";
 
