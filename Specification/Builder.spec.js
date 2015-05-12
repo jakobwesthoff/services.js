@@ -46,6 +46,28 @@ describe("Builder", function () {
 
             mock.expects("create").once()
                 .returns(
+                    Immutable.fromJS({
+                        meta: {
+                            dependencies: []
+                        },
+                        factory: function() {}
+                    })
+                );
+
+            var builder = new Builder([factoryCreator]);
+            builder.build({
+                services: {
+                    "Foo": {}
+                }
+            });
+
+            mock.verify();
+        });
+
+        it("should provide immutable Map to factory creator", function() {
+            sinon.stub(factoryCreator);
+            factoryCreator.canHandle.returns(true);
+            factoryCreator.create.returns(
                 Immutable.fromJS({
                     meta: {
                         dependencies: []
@@ -57,11 +79,74 @@ describe("Builder", function () {
             var builder = new Builder([factoryCreator]);
             builder.build({
                 services: {
-                    "Foo": {}
+                    "a": {}
                 }
             });
 
-            mock.verify();
+            expect(factoryCreator.create.args[0][0], "to be a", Map);
+        });
+
+        it("should provide immutable Map with original values", function() {
+            sinon.stub(factoryCreator);
+            factoryCreator.canHandle.returns(true);
+            factoryCreator.create.returns(
+                Immutable.fromJS({
+                    meta: {
+                        dependencies: []
+                    },
+                    factory: function() {}
+                })
+            );
+
+            var builder = new Builder([factoryCreator]);
+            var servicesDefinition = {
+                services: {
+                    "a": {
+                        array: [1,2,3],
+                        obj: {"foo": "x", bar: true},
+                        string: "some string",
+                        number: 423,
+                        bool: true,
+                        undef: undefined,
+                        nil: null
+                    }
+                }
+            };
+            builder.build(servicesDefinition);
+
+            var resultDefinition = factoryCreator.create.args[0][0];
+
+            resultDefinition.forEach((value, key) => {
+                expect(value, "to equal", servicesDefinition.services.a[key]);
+            });
+        });
+
+        it("should provide immutable Map with immutable whitelisted values", function() {
+            sinon.stub(factoryCreator);
+            factoryCreator.canHandle.returns(true);
+            factoryCreator.create.returns(
+                Immutable.fromJS({
+                    meta: {
+                        dependencies: []
+                    },
+                    factory: function() {}
+                })
+            );
+
+            var builder = new Builder([factoryCreator]);
+            var servicesDefinition = {
+                services: {
+                    "a": {
+                        arguments: ["b", "c", "d"]
+                    }
+                }
+            };
+            builder.build(servicesDefinition);
+
+            var resultDefinition = factoryCreator.create.args[0][0];
+
+            expect(resultDefinition.get("arguments"), "to be a", List);
+            expect(resultDefinition.get("arguments").toArray(), "to equal", servicesDefinition.services.a.arguments);
         });
 
         it("should check dependency availability based on given meta data", function() {
