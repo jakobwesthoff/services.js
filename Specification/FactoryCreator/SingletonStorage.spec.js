@@ -4,7 +4,7 @@ import expect from "unexpected";
 import unexpectedSinon from "unexpected-sinon";
 expect.installPlugin(unexpectedSinon);
 
-import SingletonStorage from "../Library/FactoryCreator/SingletonStorage";
+import SingletonStorage from "../../Library/FactoryCreator/SingletonStorage";
 
 describe("SingletonStorage", function() {
     var FactoryCreator, factoryCreatorInstance = null;
