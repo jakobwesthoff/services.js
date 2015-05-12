@@ -1,4 +1,4 @@
-import Immutable, {List, Map} from "immutable";
+import Immutable, {List, Map, Seq} from "immutable";
 import Container from "./Container.js";
 
 import ValueFactoryCreator from "./FactoryCreator/Value";
@@ -25,24 +25,60 @@ export class Builder {
     }
 
     preprocessConfigurations(configurations) {
-        var immutableServiceDefinitions = this.createImmutableServiceDefinitions(configurations);
-        var definitions = this.mergeServiceDefinitions(immutableServiceDefinitions);
-        return definitions;
+
+        var configuration = this.mergeServiceConfigurations(configurations);
+        // TODO: Introduce variable processing in the future
+        return this.extractImmutableServiceDefinitions(configuration);
     }
 
-    createImmutableServiceDefinitions(serviceDeclarations) {
-        return serviceDeclarations.map(
-            declaration => Immutable.fromJS(declaration.services)
-        );
+    extractImmutableServiceDefinitions(configuration) {
+        var services = configuration.services;
+
+        // Only convert the first level of each service definition to immutable Map + some specially treeted properties.
+        var conversionWhitelist = {
+            "arguments": "toList"
+        };
+
+        var immutableServices = (new Map()).withMutations(servicesMap => {
+            var serviceNames = Object.keys(services);
+            serviceNames.forEach(serviceName => {
+                var definition = services[serviceName];
+                servicesMap.set(serviceName, (new Map()).withMutations(definitionMap => {
+                    Object.keys(definition).forEach(definitionKey => {
+                        var definitionValue = definition[definitionKey];
+                        if (conversionWhitelist[definitionKey] !== undefined) {
+                            definitionMap.set(definitionKey, (new Seq(definitionValue))[conversionWhitelist[definitionKey]]());
+                        } else {
+                            definitionMap.set(definitionKey, definitionValue);
+                        }
+                    });
+                }));
+            });
+        });
+
+        return immutableServices;
     };
 
-    mergeServiceDefinitions(serviceDefinitionsArray) {
-        var firstMap = serviceDefinitionsArray.shift();
-        if (serviceDefinitionsArray.length > 0) {
-            return firstMap.merge(...serviceDefinitionsArray);
-        } else {
-            return firstMap;
+    mergeServiceConfigurations(configurations) {
+        // Isolate all needed first level elements
+        var neededKeys = new Set();
+        configurations.forEach(
+            configuration => Object.keys(configuration).forEach(
+                key => neededKeys.add(key)
+            )
+        );
+
+        // Merge all first level keys into each other
+        var mergedConfiguration = {};
+        for(let key of neededKeys) {
+            let configurationsWithKey = configurations
+                .filter(configuration => configuration.hasOwnProperty(key))
+                .map(configuration => configuration[key]);
+
+            mergedConfiguration[key] = Object.assign({}, ...configurationsWithKey);
         }
+
+        return mergedConfiguration;
     }
 
     buildFactories(serviceDefinitions) {
