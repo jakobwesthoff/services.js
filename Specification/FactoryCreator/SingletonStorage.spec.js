@@ -38,6 +38,10 @@ describe("SingletonStorage", function() {
     it("should proxy create calls", function() {
         var WrappedFactoryCreator = SingletonStorage(FactoryCreator);
         var creator = new WrappedFactoryCreator();
+        factoryCreatorInstance.create.returns(Immutable.fromJS({
+            meta: {dependencies: []},
+            factory: function() {}
+        }));
 
         var map = new Map({});
         creator.create(map);
@@ -52,9 +56,14 @@ describe("SingletonStorage", function() {
             counter = 0;
             FactoryCreator = sinon.spy(function() {
                 this.create = sinon.spy(function() {
-                    return function() {
-                        return counter++;
-                    }
+                    return Immutable.fromJS({
+                        meta: {
+                            dependencies: ["b", "c", "d"]
+                        },
+                        factory: function() {
+                            return counter++;
+                        }
+                    })
                 });
                 factoryCreatorInstance = this;
             });
@@ -66,7 +75,8 @@ describe("SingletonStorage", function() {
             var creator = new WrappedFactoryCreator();
 
             var map = new Map({});
-            var factory = creator.create(map);
+            var enrichedFactory = creator.create(map);
+            var factory = enrichedFactory.get("factory");
 
             factory();
             factory();
@@ -86,7 +96,8 @@ describe("SingletonStorage", function() {
                 var creator = new WrappedFactoryCreator();
 
                 var definition = Immutable.fromJS(data.definition);
-                var factory = creator.create(definition);
+                var enrichedFactory = creator.create(definition);
+                var factory = enrichedFactory.get("factory");
 
                 var result = [factory(), factory(), factory()];
 
@@ -98,7 +109,8 @@ describe("SingletonStorage", function() {
                 var creator = new WrappedFactoryCreator();
 
                 var definition = Immutable.fromJS(data.definition);
-                var factory = creator.create(definition);
+                var enrichedFactory = creator.create(definition);
+                var factory = enrichedFactory.get("factory");
 
                 var result = [factory(), factory(), factory()];
 
@@ -117,7 +129,8 @@ describe("SingletonStorage", function() {
                 var creator = new WrappedFactoryCreator();
 
                 var definition = Immutable.fromJS(data.definition);
-                var factory = creator.create(definition);
+                var enrichedFactory = creator.create(definition);
+                var factory = enrichedFactory.get("factory");
 
                 var result = [factory(), factory(), factory()];
 
