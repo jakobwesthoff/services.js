@@ -117,6 +117,9 @@ describe("Builder", function () {
             var resultDefinition = factoryCreator.create.args[0][0];
 
             resultDefinition.forEach((value, key) => {
+                if (key === "arguments") {
+                    return;
+                }
                 expect(value, "to equal", servicesDefinition.services.a[key]);
             });
         });
@@ -147,6 +150,31 @@ describe("Builder", function () {
 
             expect(resultDefinition.get("arguments"), "to be a", List);
             expect(resultDefinition.get("arguments").toArray(), "to equal", servicesDefinition.services.a.arguments);
+        });
+
+        it("should add arguments property to every definition not providing it", function() {
+            sinon.stub(factoryCreator);
+            factoryCreator.canHandle.returns(true);
+            factoryCreator.create.returns(
+                Immutable.fromJS({
+                    meta: {
+                        dependencies: []
+                    },
+                    factory: function() {}
+                })
+            );
+
+            var builder = new Builder([factoryCreator]);
+            var servicesDefinition = {
+                services: {
+                    "a": {}
+                }
+            };
+            builder.build(servicesDefinition);
+
+            var resultDefinition = factoryCreator.create.args[0][0];
+
+            expect(resultDefinition.get("arguments"), "to be a", List);
         });
 
         it("should check dependency availability based on given meta data", function() {

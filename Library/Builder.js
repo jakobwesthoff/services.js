@@ -28,7 +28,19 @@ export class Builder {
 
         var configuration = this.mergeServiceConfigurations(configurations);
         // TODO: Introduce variable processing in the future
+        this.augmentConfigurationWithDefaults(configuration);
         return this.extractImmutableServiceDefinitions(configuration);
+    }
+
+    augmentConfigurationWithDefaults(configuration) {
+        for(let serviceName in configuration.services) {
+            if (configuration.services.hasOwnProperty(serviceName)) {
+                let service = configuration.services[serviceName];
+                if (service.arguments === undefined) {
+                    service.arguments = [];
+                }
+            }
+        }
     }
 
     extractImmutableServiceDefinitions(configuration) {
