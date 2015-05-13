@@ -85,6 +85,16 @@ describe("SingletonStorage", function() {
             expect(factoryCreatorInstance.create, "was called with", map);
         });
 
+        it("should proxy meta information", function() {
+            var WrappedFactoryCreator = SingletonStorage(FactoryCreator);
+            var creator = new WrappedFactoryCreator();
+
+            var map = new Map({});
+            var enrichedFactory = creator.create(map);
+
+            expect(enrichedFactory.get("meta").toJS(), "to equal", {dependencies: ["b", "c", "d"]});
+        });
+
         [
             {definition: {}, expected: [0, 1, 2]},
             {definition: {isSingleton: true}, expected: [0, 0, 0]},

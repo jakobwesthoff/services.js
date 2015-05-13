@@ -15,9 +15,7 @@ export default function SingletonStorage(FactoryCreator, singletonIsDefault = fa
             var factory = enrichedFactory.get("factory");
 
             return new Map({
-                meta: new Map({
-                    dependencies: enrichedFactory.get("dependencies")
-                }),
+                meta: enrichedFactory.get("meta"),
                 factory: container => {
                     if (this.isSingleton(definition)) {
                         if (this.storage !== null) {
