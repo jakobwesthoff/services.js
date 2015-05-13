@@ -1,7 +1,7 @@
 import Immutable from "immutable";
 import SingletonStorage from "./SingletonStorage";
 
-class ClassFactoryBuilder {
+class ClassFactoryCreator {
     canHandle(definition) {
         return definition.get("class") !== undefined;
     }
@@ -22,4 +22,4 @@ class ClassFactoryBuilder {
     }
 }
 
-export default SingletonStorage(ClassFactoryBuilder, false);
+export default SingletonStorage(ClassFactoryCreator, false);
