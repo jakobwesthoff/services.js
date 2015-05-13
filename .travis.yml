@@ -2,6 +2,7 @@ language: node_js
 node_js:
 - '0.12'
 - 'iojs-v1'
+- 'iojs-v2'
 sudo: false
 cache:
   directories:
@@ -11,6 +12,9 @@ notifications:
 before_script:
 - npm prune
 - curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+script:
+- npm test
+- npm test:distribution
 after_success:
 - python travis_after_all.py
 - export $(cat .to_export_back)
@@ -24,13 +28,13 @@ after_script:
 env:
   global:
     secure: MfWugwOoP3Yq5Iwn9/jFcLexMox0wx8FvyCPYT1UbviSiXne/h3mSLzbsyzurJC7ft4IyVCEuOmrxd9oAg43kdHHdkdAnws9Ct081RjUfvsASvz+w1F6QELNA5FXdf+vn4S+pmWDBIAc3E45LfpLNGLEbe57mPyJsz3F9Ke33UQ=
-deploy:
-  provider: npm
-  email: jakob-npm@westhoffswelt.de
-  skip_cleanup: true
-  on:
-    branch: master
-    repo: jakobwesthoff/dependency.js
-    condition: "$BUILD_LEADER$BUILD_AGGREGATE_STATUS = YESothers_succeeded"
-  api_key:
-    secure: J8l8Esmw2o2PtF3+Mv44YVHATXSXz8+AVMcLdSc4hC4w60nsCkx4JxvtXCn16YzE3JpsbA8Pv5hhNBXl2z88P4HheBjHmYkTCmJzuIzCu3Wy8vSPVjZQQPhe3BlKk1PLhEatjoYnXtAWO+fNt2uPEcnhSiVxE1Mz7+yBjDewQP8=
+#deploy:
+#  provider: npm
+#  email: jakob-npm@westhoffswelt.de
+#  skip_cleanup: true
+#  on:
+#    branch: master
+#    repo: jakobwesthoff/services.js
+#    condition: "$BUILD_LEADER$BUILD_AGGREGATE_STATUS = YESothers_succeeded"
+#  api_key:
+#    secure: J8l8Esmw2o2PtF3+Mv44YVHATXSXz8+AVMcLdSc4hC4w60nsCkx4JxvtXCn16YzE3JpsbA8Pv5hhNBXl2z88P4HheBjHmYkTCmJzuIzCu3Wy8vSPVjZQQPhe3BlKk1PLhEatjoYnXtAWO+fNt2uPEcnhSiVxE1Mz7+yBjDewQP8=
