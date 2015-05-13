@@ -1,6 +1,5 @@
 import Immutable from "immutable";
 import SingletonStorage from "./SingletonStorage";
-import FactoryEnrichment from "./FactoryEnrichment";
 
 class ClassFactoryBuilder {
     canHandle(definition) {
