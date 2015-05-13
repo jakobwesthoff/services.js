@@ -6,9 +6,9 @@
   "scripts": {
     "prepublish": "npm run clean && npm run babel:index && npm run babel:library && semantic-release pre",
     "clean": "rm -rf ./Distribution/*",
-    "babel:index": "node node_modules/.bin/babel -d Distribution index.js",
-    "babel:library": "node node_modules/.bin/babel -d Distribution/Library Library",
-    "babel:specs": "node node_modules/.bin/babel --copy-files -d Distribution/Specification Specification",
+    "babel:index": "node node_modules/.bin/babel --optional runtime -d Distribution index.js",
+    "babel:library": "node node_modules/.bin/babel --optional runtime -d Distribution/Library Library",
+    "babel:specs": "node node_modules/.bin/babel --optional runtime --copy-files -d Distribution/Specification Specification",
     "test:distribution": "npm run clean && npm run babel:index && npm run babel:library && npm run babel:specs && cd Distribution && ../node_modules/.bin/jasmine JASMINE_CONFIG_PATH=Specification/Support/jasmine.json; cd ..",
     "test": "./node_modules/.bin/babel-node ./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=Specification/Support/jasmine.json; cd ..",
     "postpublish": "semantic-release post"
@@ -27,7 +27,9 @@
   "author": "Jakob Westhoff <jakob@westhoffswelt.de> (http://westhoffswelt.de)",
   "license": "MIT",
   "dependencies": {
-    "immutable": "^3.7.2"
+    "babel-runtime": "^5.3.1",
+    "immutable": "^3.7.2",
+    "lodash.find": "^3.2.0"
   },
   "devDependencies": {
     "babel": "^5.0.12",

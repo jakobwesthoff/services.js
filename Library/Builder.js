@@ -1,4 +1,5 @@
 import Immutable, {List, Map, Seq} from "immutable";
+import findInCollection from "lodash.find";
 import Container from "./Container.js";
 
 import ValueFactoryCreator from "./FactoryCreator/Value";
@@ -105,7 +106,7 @@ export class Builder {
     }
 
     findFactoryCreatorForDefinition(definition) {
-        var factoryCreator = this.factoryCreators.find(
+        var factoryCreator = findInCollection(this.factoryCreators,
             factoryCreator => factoryCreator.canHandle(definition)
         );
 
