@@ -3,10 +3,14 @@ import findInCollection from "lodash.find";
 import Container from "./Container.js";
 
 import ValueFactoryCreator from "./FactoryCreator/Value";
+import ClassFactoryCreator from "./FactoryCreator/Class";
+import FactoryFunctionFactoryCreator from "./FactoryCreator/FactoryFunction";
 
 export class Builder {
     constructor(factoryCreators = [
-        new ValueFactoryCreator()
+        new ValueFactoryCreator(),
+        new ClassFactoryCreator(),
+        new FactoryFunctionFactoryCreator()
     ]) {
         this.factoryCreators = factoryCreators;
     }
