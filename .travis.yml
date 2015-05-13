@@ -13,8 +13,8 @@ before_script:
 - npm prune
 - curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
 script:
-- npm test
-- npm test:distribution
+- npm run test
+- npm run test:distribution
 after_success:
 - python travis_after_all.py
 - export $(cat .to_export_back)
