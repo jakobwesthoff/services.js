@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-- 'iojs-v2'
-- 'iojs-v1'
+- iojs-v2
+- iojs-v1
 - '0.12'
 sudo: false
 cache:
@@ -27,7 +27,7 @@ after_script:
 - echo leader=$BUILD_LEADER status=$BUILD_AGGREGATE_STATUS
 env:
   global:
-    secure: MfWugwOoP3Yq5Iwn9/jFcLexMox0wx8FvyCPYT1UbviSiXne/h3mSLzbsyzurJC7ft4IyVCEuOmrxd9oAg43kdHHdkdAnws9Ct081RjUfvsASvz+w1F6QELNA5FXdf+vn4S+pmWDBIAc3E45LfpLNGLEbe57mPyJsz3F9Ke33UQ=
+    secure: ZvZ9nWcNlWCiHZ65gXUuX6eXDZpHzv14xVMlZJaIg87MipfCeMFIDKR3QxIKDZ5zVifXwB95Pi9xdVrlLBbF23dznSyET5m9nIWFOyJYZmrFyhAXDsGTtp8XzAHbqnqt3Z5cIrecFYd0TnJOMONTmOVxviRAIXzxAKRV3MNW1X0Y/F9OJdTx9hUnReXWn1cRZQNCd9Mbn6U1yK+ZlNsiQ+WMry8MH5mqRRdrnJAy0xcwXAz8RQPy36Ky/aVl/U2pMjBllj1DIgSdsqOBGJbnFdkn8AamAR7Qp19BP8d0sNPBLlkJZ4I48tRo/cZbn0Qzz87CWZxpc5MeBKgz5IDSLr93urpmeGNjxx0dXnaZMWfZCJWvgie6yn016ezXW3qRnBYYjnJjnl3yIKC3rEcsLgxOekn1OF8PcDwMU7iiGSpdVO2dtLE8TxG5SKjsde7gjLLxAXZPEyaZHgIuTDE2p8MfeJeW1gOfC8oasoxJYaQUC60bzztgTwdsO38z80ZQF9JZL/OzuzhS9holI+z10qR8SvdiMuuS4/7RunQ4rOGPOlBDlRlR0i589cVv7sEXWVgqMVd/A30+EmKVrOtQpJ8jKY7ooGHfxJptGHKYEQXX1JMF5wpyV2tEsVvcQb63o35rYZvU5U8DSWDG9dDPXbrg6oIKPc8ivIOSYY7pvYw=
 deploy:
   provider: npm
   email: jakob-npm@westhoffswelt.de
@@ -35,6 +35,6 @@ deploy:
   on:
     branch: master
     repo: jakobwesthoff/services.js
-    condition: "$BUILD_LEADER$BUILD_AGGREGATE_STATUS = YESothers_succeeded"
+    condition: $BUILD_LEADER$BUILD_AGGREGATE_STATUS = YESothers_succeeded
   api_key:
-    secure: J8l8Esmw2o2PtF3+Mv44YVHATXSXz8+AVMcLdSc4hC4w60nsCkx4JxvtXCn16YzE3JpsbA8Pv5hhNBXl2z88P4HheBjHmYkTCmJzuIzCu3Wy8vSPVjZQQPhe3BlKk1PLhEatjoYnXtAWO+fNt2uPEcnhSiVxE1Mz7+yBjDewQP8=
+    secure: oLK3qOJTwDPcKCskCo2/WuZMUu41aBjTZCzBL93+/2/O2yxuo+auyLd7/V/yPKf+JHfh51q10XkG7sB0LCpEioE9T6fOo8gCmbyYUlU618L9Thjll2SfXZHTL6EU99sjsufdyLzv3R2QMM+dhTA1a0s4HnBcaAl/KotFWxW+dheKwxd5sFE2ttuhiSVm+OaTZ1hrV1g5K5A/40iYIiTZO3gQv+GuZ4UNpKhPnxi+0lrXQS3NIO0bIw+0NYkFCnlcamaMxF0SE2D0FXfDEEiEWdgTJK6GOZDFBHUslhv9F31qV2bFrpMut+lqG22T9XXvTgjKJSP2VlCUxBmFIjJ4STTCJR0tRctHi7DqeRXlgrO44kPajBaoBRlW25hYTyA6Mm3Gz1gv866jNc8+oivcTkMoDBantYJuI4C7EYzVc3qi/W4KMnc15htjpG4p2pWSxoAHHKoIAdqsbliQrnmMzVrXtnS68IDVdD2O9ULY35Fa83MxnbWBGVfv5pGIegHqSnDk8i5T9GbyEkUAyqocJQ84ZdqM4KhcJGb53G8Qyv1W1OhnAqs0IAB36iFTfxwaNtc19kHxvLF1KyE4pnDidT72PedZBeB81ALBhYdUJNOEj/0qoIxAVhqPhXSF3gHMPqGlbE/3BVU4EdGGDQQpCdHtjzSUAQN+nAdNWKJfQjc=
