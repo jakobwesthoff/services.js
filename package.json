@@ -4,14 +4,14 @@
   "description": "A dependency injection container for javascript using explicit service definitions",
   "main": "Distribution/index.js",
   "scripts": {
-    "prepublish": "npm run clean && npm run babel:index && npm run babel:library && semantic-release pre",
+    "prepublish": "npm run clean && npm run babel:index && npm run babel:library && ./node_modules/.bin/semantic-release pre",
     "clean": "rm -rf ./Distribution/*",
     "babel:index": "node node_modules/.bin/babel --optional runtime -d Distribution index.js",
     "babel:library": "node node_modules/.bin/babel --optional runtime -d Distribution/Library Library",
     "babel:specs": "node node_modules/.bin/babel --optional runtime --copy-files -d Distribution/Specification Specification",
     "test:distribution": "npm run clean && npm run babel:index && npm run babel:library && npm run babel:specs && cd Distribution && ../node_modules/.bin/jasmine JASMINE_CONFIG_PATH=Specification/Support/jasmine.json; cd ..",
     "test": "./node_modules/.bin/babel-node ./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=Specification/Support/jasmine.json; cd ..",
-    "postpublish": "semantic-release post"
+    "postpublish": "./node_modules/.bin/semantic-release post"
   },
   "repository": {
     "type": "git",
