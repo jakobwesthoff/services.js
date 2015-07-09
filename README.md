@@ -10,11 +10,11 @@ Using `Services.js` is quite easy. Install `services.js` using npm and load the
 dependency using `require` or utilizing your browser build tool of choice:
 
 ```bash
-    npm install --save @jakobwesthoff/services.js
+    npm install --save services.js
 ```
 
 ```javascript
-    var Services = require("@jakobwesthoff/services.js");
+    var Services = require("services.js");
 
     var builder = new Services.Builder();
     var container = builder.build([servicesConfig, ...]);

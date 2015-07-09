@@ -1,5 +1,5 @@
 {
-  "name": "@jakobwesthoff/services.js",
+  "name": "services.js",
   "version": "0.0.0-semantically-released",
   "description": "A dependency injection container for javascript using explicit service definitions",
   "main": "Distribution/index.js",
